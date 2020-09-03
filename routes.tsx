@@ -4,13 +4,13 @@ import GlobalFeed from "./pages/globalFeed/GlobalFeed"
 import Auth from "./pages/auth/Auth"
 import {UserType, CollectionType, PostType} from './components/types/Types'
 import Profile from "./pages/profile/Profile"
+import CollectionIndex from './components/collectionIndex/CollectionIndex'
 
 type AcceptedProps = {
   updateToken: (newToken: string) => void
   
 }
 
-// update cameron branch
 
 export default class Routes extends React.Component <AcceptedProps> {
 
@@ -20,7 +20,8 @@ export default class Routes extends React.Component <AcceptedProps> {
         <Route path="/" component={GlobalFeed} exact/>
         <Route path="/login"><Auth updateToken={this.props.updateToken}/> </Route> 
         <Route path="/register"><Auth updateToken={this.props.updateToken}/></Route>
-        <Route path="/profile/:slug"><Profile user={this.state.user}/> </Route> 
+        <Route path="/profile/:slug" component={Profile} />
+        <Route path="/collection-index" component={CollectionIndex} />
       </Switch>
     )
   }

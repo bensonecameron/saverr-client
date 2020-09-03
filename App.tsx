@@ -42,7 +42,7 @@ export default class App extends React.Component<{}, AuthState> {
     return (
       <div className="App">
         <Router>
-          <Topbar clearToken={() => this.clearToken()} />
+          <Topbar clearToken={() => this.clearToken()} sessionToken={this.state.sessionToken} />
           {this.state.sessionToken !== "" ? <Profile sessionToken={this.state.sessionToken} clearToken={() => this.clearToken()}/> : <Routes updateToken={(newToken)=>{this.updateToken(newToken)}}/>}
         </Router>
       </div>
