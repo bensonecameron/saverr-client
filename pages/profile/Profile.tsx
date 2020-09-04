@@ -1,5 +1,6 @@
 import React from 'react';
 import {UserType } from '../../components/types/Types';
+import Collections from  '../collections/Collections';
 
 type AcceptedProps = {
   clearToken: () => void
@@ -10,7 +11,11 @@ type HomeState = {
   user: UserType
 }
 
-export default class Profile extends React.Component <AcceptedProps, HomeState> {
+type ViewState = {
+  viewToggle: boolean
+}
+
+export default class Profile extends React.Component <AcceptedProps, HomeState, ViewState> {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
@@ -59,10 +64,10 @@ componentWillMount() {
   render(){
     return (
       <div>
-        <h2> {this.props.user.firstName} </h2>
-        <fieldset>
-
-        </fieldset>
+        <div className="container">
+          <h2> User Name Here </h2>
+          <Collections />
+        </div>
       </div>
     )
   }  
