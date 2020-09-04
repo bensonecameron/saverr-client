@@ -1,6 +1,7 @@
 import React, {FormEvent} from 'react';
 import sessionToken from '../Topbar'
 import { CollectionType } from '../types/Types';
+import {Link} from 'react-router-dom'
 import { Card, CardHeader, CardTitle, CardBody, Button, Modal, Row, Col } from 'reactstrap';
 
 type AcceptedProps = {
@@ -23,27 +24,25 @@ export default class CollectionIndex extends React.Component <AcceptedProps, Col
     super(props)
     this.state = {
         collection: {
-            nameOfCollection: this.props.collection.nameOfCollection,
-            descriptionOfCollection: this.props.collection.descriptionOfCollection,
+            nameOfCollection: "",
+            descriptionOfCollection: "",
             impCollection: false
 
         }
     }
   }
 
-  handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  fetchCollection () {
+    let collection = this.state.collection
+    this.setState({collection: collection})
+
+
     fetch('http://localhost:3001/collection/', {
       method: 'GET',
       headers: {
-        'content-type' : 'application/json'
-      },
-      body: JSON.stringify({collection: {
-        nameOfCollection: this.state.collection.nameOfCollection,
-        descriptionOfCollection: this.state.collection.descriptionOfCollection,
-        impCollection: this.state.collection
+        'content-type' : 'application/json',
+        'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk5MTc3MDc2LCJleHAiOjE1OTkyNjM0NzZ9.F0_W2zyHyws1qBXBMN2_5yt8mQcPz_YUB1Pwzf4DvaY"
       }
-    })
     })
     .then(res=>res.json())
     .then(res => {
@@ -56,19 +55,23 @@ export default class CollectionIndex extends React.Component <AcceptedProps, Col
               impCollection: false
             }
         })
-        console.log("collection mounted:", this.state.collection)
       }
     })
 }
 
-  render(){
-    return (
-      <div className="auth-page">
-        <div className="container page">
+componentWillMount() {
+        
+  this.fetchCollection();
+}
 
-        </div>
+render(){
+  return (
+    <div className="auth-page">
+      <div className="container page">
+        
       </div>
-      )
-    
-  }  
+    </div>
+    )
+  
+}  
 }
