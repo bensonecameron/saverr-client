@@ -1,5 +1,5 @@
-import React from 'react';
-import {UserType } from '../../components/types/Types';
+import React from 'react'
+import {UserType} from '../../components/types/Types'
 
 type AcceptedProps = {
   clearToken: () => void
@@ -10,60 +10,56 @@ type HomeState = {
   user: UserType
 }
 
-export default class Profile extends React.Component <AcceptedProps, HomeState> {
+export default class Profile extends React.Component<AcceptedProps, HomeState> {
   constructor(props: AcceptedProps) {
-    super(props);
+    super(props)
     this.state = {
-        user: {
-            firstName: '',
-            lastName: '',
-        }
+      user: {
+        firstName: '',
+        lastName: '',
+      },
     }
-}
+  }
 
-fetchUser() {
-  let user = this.state.user;
-  user.id = 0;
-  this.setState({user: user})
+  fetchUser() {
+    let user = this.state.user
+    user.id = 0
+    this.setState({user: user})
 
-
-  fetch('http://localhost:3001/user/', {
+    fetch('http://localhost:3001/user/', {
       method: 'get',
       headers: {
-          'content-type': 'application/json',
-          'authorization': this.props.sessionToken
-      }
-  })
-      .then(res => res.json())
-      .then(res => {
-          console.log("res:", res);
-          if (res.id) {
-              this.setState({
-                  user: {
-                      firstName: res.firstName,
-                      lastName: res.lastName,
-                  }
-              })
-          }
+        'content-type': 'application/json',
+        authorization: this.props.sessionToken,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log('res:', res)
+        if (res.id) {
+          this.setState({
+            user: {
+              firstName: res.firstName,
+              lastName: res.lastName,
+            },
+          })
+        }
       })
-      .catch(err => {
-          this.props.clearToken();
+      .catch((err) => {
+        this.props.clearToken()
       })
-}
+  }
 
-componentWillMount() {
-        
-  this.fetchUser();
-}
+  componentWillMount() {
+    this.fetchUser()
+  }
 
-  render(){
+  render() {
     return (
       <div>
-        <h2> {this.props.user.firstName} </h2>
-        <fieldset>
-
-        </fieldset>
+        <h2> {this.state.user.firstName} </h2>
+        <fieldset></fieldset>
       </div>
     )
-  }  
+  }
 }
