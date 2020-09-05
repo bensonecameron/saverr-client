@@ -1,10 +1,13 @@
 import React from 'react'
 import {UserType} from '../../components/types/Types'
 import Collections from '../collections/Collections'
+import {NavLink, Link} from 'react-router-dom'
+import Routes from '../../routes'
 
 type AcceptedProps = {
   clearToken: () => void
   sessionToken: string
+  updateToken: (newToken: string) => void
 }
 
 type HomeState = {
@@ -67,6 +70,12 @@ export default class Profile extends React.Component<
     return (
       <div>
         <div className="container">
+          <Routes
+            sessionToken={this.props.sessionToken}
+            updateToken={(newToken) => {
+              this.props.updateToken(newToken)
+            }}
+          />
           <h2> User Name Here </h2>
           <Collections />
         </div>

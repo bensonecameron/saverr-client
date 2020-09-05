@@ -26,7 +26,9 @@ export default class Routes extends React.Component<AcceptedProps> {
         </Route>
         <Route path="/profile/:slug" component={Profile} />
         <Route path="/collection-index" component={CollectionIndex} />
-        <Route path="/post-index" component={PostIndex} />
+        <Route path="/post-index">
+          <PostIndex sessionToken={this.props.sessionToken} />
+        </Route>
         <Route path="/user-index" component={UserIndex} />
       </Switch>
     )
