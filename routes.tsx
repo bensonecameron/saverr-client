@@ -13,8 +13,6 @@ type AcceptedProps = {
   sessionToken: string
 }
 
-// push for develop
-
 export default class Routes extends React.Component<AcceptedProps> {
   render() {
     return (
