@@ -3,6 +3,7 @@ import {NavLink, Link} from 'react-router-dom'
 
 type AcceptedProps = {
   clearToken: () => void
+  sessionToken: string
 }
 
 export default class Topbar extends React.Component <AcceptedProps>{

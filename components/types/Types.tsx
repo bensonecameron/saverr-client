@@ -10,9 +10,9 @@ export type CollectionType = {
   id?: number
   nameOfCollection: string,
   descriptionOfCollection: string,
-  tagsOfCollection: string,
-  impCollection: boolean,
-  userId: number
+  tagsOfCollection?: string,
+  impCollection?: boolean,
+  userId?: number
 }
 export type PostType = {
   id?: number,
