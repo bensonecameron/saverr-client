@@ -13,8 +13,6 @@ type AcceptedProps = {
   sessionToken: string
 }
 
-/// adding development brach
-
 export default class Routes extends React.Component<AcceptedProps> {
   render() {
     return (
