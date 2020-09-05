@@ -17,13 +17,13 @@ type AcceptedProps = {
   sessionToken: string
 }
 
-type PostProp = {
+type PostState = {
   post: PostType
 }
 
 export default class PostIndex extends React.Component<
   AcceptedProps,
-  PostProp
+  PostState
 > {
   constructor(props: AcceptedProps) {
     super(props)
