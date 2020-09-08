@@ -65,6 +65,8 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
     this.fetchUser();
   }
 
+  // trying to force push working to develop
+
   render() {
     return (
       <div className="main">
