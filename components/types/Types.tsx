@@ -1,33 +1,32 @@
-export type UserType = {
-  id?: number,
-  firstName?: string,
-  lastName?: string,
-  email?: string,
-  userName?: string,
+export interface UserType {
+  firstName?: string;
+  userName: string;
+  collections?: any;
+  posts?: any;
+  id?: number;
 }
 
-export type CollectionType = {
-  id?: number
-  nameOfCollection: string,
-  descriptionOfCollection: string,
-  tagsOfCollection?: string,
-  impCollection?: boolean,
-  userId?: number
+export interface CollectionType {
+  nameOfCollection?: string;
+  decriptionOfCollection?: string;
+  impCollection?: boolean;
+  userId?: number;
+  id?: number;
+  posts?: any;
 }
-export type PostType = {
-  id?: number,
-  titleOfPost: string,
-  descriptionOfPost: string,
-  url: string,
-  imgOfPost: string,
-  tagsOfPost: string,
-  impPost: boolean,
-  userId?: number,
-  collectionID: number
-  
-}
-export type ContentType = { //may not use this one, stretch goal 
-  collection?: {},
-  post?: {}
+export interface PostType {
+  titleOfPost?: string;
+  descriptionOfPost?: string;
+  url?: string;
+  imgOfPost: string;
+  impPost: boolean;
+  userId?: number;
+  id?: number;
+  collections?: any;
 }
 
+interface ContentType {
+  //may not use this one, stretch goal
+  collection?: {};
+  post?: {};
+}

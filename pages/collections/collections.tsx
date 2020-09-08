@@ -1,7 +1,20 @@
-import React from 'react'
-import CollectionIndex from '../../components/collectionIndex/CollectionIndex'
+import React from "react";
+import {
+  PostType,
+  UserType,
+  CollectionType,
+} from "../../components/types/Types";
+import CollectionIndex from "../../components/collectionIndex/CollectionIndex";
 
-export default class Collections extends React.Component {
+type AcceptedProps = {
+  sessionToken: string;
+  user: UserType;
+  fetchUser: () => void;
+  deleteCollection: () => void;
+  setCollectionToEdit: () => void;
+};
+
+export default class Collections extends React.Component<AcceptedProps> {
   render() {
     return (
       <div className="article-page">
@@ -18,6 +31,6 @@ export default class Collections extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

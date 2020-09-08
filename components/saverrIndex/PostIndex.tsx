@@ -1,6 +1,6 @@
 import React, { FormEvent } from "react";
 import sessionToken from "../Topbar";
-import { UserType } from "../types/Types";
+import { CollectionType, PostType, UserType } from "../types/Types";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -14,32 +14,40 @@ import {
 } from "reactstrap";
 import APIURL from "../../helpers/environment";
 
-type AcceptedProps = {
+interface AcceptedProps {
   sessionToken: string;
-};
-
-type UserState = {
   user: UserType;
-};
+  collections: CollectionType[];
 
-export default class UserIndex extends React.Component<
+  fetchUser: () => void;
+}
+
+interface PostState {
+  post: PostType;
+}
+
+export default class PostIndex extends React.Component<
   AcceptedProps,
-  UserState
+  PostState
 > {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      user: {
-        userName: "",
+      post: {
+        titleOfPost: "",
+        descriptionOfPost: "",
+        url: "",
+        imgOfPost: "",
+        impPost: false,
       },
     };
   }
 
-  fetchUser() {
-    let user = this.state.user;
-    this.setState({ user: user });
+  fetchPost() {
+    let post = this.state.post;
+    this.setState({ post: post });
 
-    fetch(`${APIURL}/user/`, {
+    fetch(`${APIURL}/post/`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -51,8 +59,12 @@ export default class UserIndex extends React.Component<
         console.log("res:", res);
         if (res.id) {
           this.setState({
-            user: {
-              userName: res.user.userName,
+            post: {
+              titleOfPost: res.titleOfPost,
+              descriptionOfPost: res.descriptionOfPost,
+              url: res.url,
+              imgOfPost: res.imgOfPost,
+              impPost: res.impPost,
             },
           });
         }
@@ -60,13 +72,17 @@ export default class UserIndex extends React.Component<
   }
 
   componentWillMount() {
-    this.fetchUser();
+    this.fetchPost();
   }
 
   render() {
     return (
       <div className="auth-page">
-        <div className="container page"></div>
+        <div className="container page">
+          <Row></Row>
+
+          <Row></Row>
+        </div>
       </div>
     );
   }

@@ -1,37 +1,38 @@
-import React, {FormEvent} from 'react'
-import {Link} from 'react-router-dom'
+import React, { FormEvent } from "react";
+import { Link } from "react-router-dom";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
-  updateToken: (newToken: string) => void
-}
+  updateToken: (newToken: string) => void;
+};
 
 type LoginInfo = {
-  pageTitle: string
-  descriptionLink: string
-  descriptionText: string
-  userName: string
-  password: string
-  isLoading?: any // I don't know what type it is if we mark as null so I used any
-}
+  pageTitle: string;
+  descriptionLink: string;
+  descriptionText: string;
+  userName: string;
+  password: string;
+  isLoading?: any; // I don't know what type it is if we mark as null so I used any
+};
 
 export default class Login extends React.Component<AcceptedProps, LoginInfo> {
   constructor(props: AcceptedProps) {
-    super(props)
+    super(props);
     this.state = {
-      pageTitle: 'Login',
-      descriptionLink: '/register',
-      descriptionText: 'Need an account?',
-      userName: '',
-      password: '',
-    }
+      pageTitle: "Login",
+      descriptionLink: "/register",
+      descriptionText: "Need an account?",
+      userName: "",
+      password: "",
+    };
   }
 
   handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    fetch('http://localhost:3001/user/signin', {
-      method: 'POST',
+    e.preventDefault();
+    fetch(`${APIURL}/user/signin`, {
+      method: "POST",
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         user: {
@@ -41,7 +42,7 @@ export default class Login extends React.Component<AcceptedProps, LoginInfo> {
       }),
     })
       .then((res) => res.json())
-      .then((json) => this.props.updateToken(json.sessionToken))
+      .then((json) => this.props.updateToken(json.sessionToken));
   }
 
   render() {
@@ -56,7 +57,7 @@ export default class Login extends React.Component<AcceptedProps, LoginInfo> {
               </p>
               <form
                 onSubmit={(e) => {
-                  this.handleSubmit(e)
+                  this.handleSubmit(e);
                 }}
               >
                 <fieldset>
@@ -67,7 +68,7 @@ export default class Login extends React.Component<AcceptedProps, LoginInfo> {
                       placeholder="Username"
                       value={this.state.userName}
                       onChange={(e) => {
-                        this.setState({userName: e.target.value})
+                        this.setState({ userName: e.target.value });
                       }}
                     />
                   </fieldset>
@@ -78,7 +79,7 @@ export default class Login extends React.Component<AcceptedProps, LoginInfo> {
                       placeholder="Password"
                       value={this.state.password}
                       onChange={(e) => {
-                        this.setState({password: e.target.value})
+                        this.setState({ password: e.target.value });
                       }}
                     />
                   </fieldset>
@@ -94,6 +95,6 @@ export default class Login extends React.Component<AcceptedProps, LoginInfo> {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
