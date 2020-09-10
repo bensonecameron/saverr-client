@@ -13,6 +13,7 @@ import {
   CardSubtitle,
   CardText,
 } from "reactstrap";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -42,7 +43,7 @@ export default class CollectionCard extends React.Component<
   }
 
   deleteCollection(collection: CollectionType) {
-    fetch(`http://localhost:3001/collection/${collection.id}`, {
+    fetch(`${APIURL}/collection/${collection.id}`, {
       method: "delete",
       headers: {
         "content-type": "application/json",
@@ -57,7 +58,7 @@ export default class CollectionCard extends React.Component<
   }
 
   updateCollection(collection: CollectionType) {
-    fetch(`http://localhost:3001/collection/${collection.id}`, {
+    fetch(`${APIURL}/collection/${collection.id}`, {
       method: "put",
       headers: {
         "content-type": "application/json",

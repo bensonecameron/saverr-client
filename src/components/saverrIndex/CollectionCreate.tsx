@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
 import { CollectionType } from "../types/Types";
 import Collections from "../../pages/collections/Collections";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -31,7 +32,7 @@ export default class CollectionCreate extends React.Component<
 
   handleSubmit(e: FormEvent) {
     e.preventDefault();
-    fetch(`http://localhost:3001/collection/new`, {
+    fetch(`${APIURL}/collection/new`, {
       method: "post",
       headers: {
         "content-type": "application/json",

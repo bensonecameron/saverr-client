@@ -1,20 +1,20 @@
-export type UserType = {
+export interface UserType {
   firstName?: string;
   userName: string;
-  collections?: [];
-  posts?: PostType[];
+  collections?: any;
+  posts?: any;
   id?: number;
-};
+}
 
-export type CollectionType = {
+export interface CollectionType {
   nameOfCollection?: string;
   decriptionOfCollection?: string;
   impCollection?: boolean;
   userId?: number;
   id?: number;
-  posts?: PostType[];
-};
-export type PostType = {
+  posts?: any;
+}
+export interface PostType {
   titleOfPost?: string;
   descriptionOfPost?: string;
   url?: string;
@@ -22,8 +22,8 @@ export type PostType = {
   impPost: boolean;
   userId?: number;
   id?: number;
-  collections?: CollectionType;
-};
+  collections?: any;
+}
 
 interface ContentType {
   //may not use this one, stretch goal

@@ -2,16 +2,20 @@ import React, { FormEvent } from "react";
 import sessionToken from "../Topbar";
 import { CollectionType, PostType, UserType } from "../types/Types";
 import { Link } from "react-router-dom";
+import StockPostImg from "../../assets/21948643.png";
 import {
   Card,
-  CardHeader,
+  CardImg,
   CardTitle,
   CardBody,
   Button,
   Modal,
   Row,
   Col,
+  CardSubtitle,
+  CardText,
 } from "reactstrap";
+import APIURL from "../../helpers/environment";
 
 interface AcceptedProps {
   sessionToken: string;
@@ -22,7 +26,7 @@ interface AcceptedProps {
 }
 
 interface PostState {
-  post: PostType;
+  posts: PostType;
 }
 
 export default class PostIndex extends React.Component<
@@ -31,56 +35,41 @@ export default class PostIndex extends React.Component<
 > {
   constructor(props: AcceptedProps) {
     super(props);
-    this.state = {
-      post: {
-        titleOfPost: "",
-        descriptionOfPost: "",
-        url: "",
-        imgOfPost: "",
-        impPost: false,
-      },
-    };
-  }
-
-  fetchPost() {
-    let post = this.state.post;
-    this.setState({ post: post });
-
-    fetch("http://localhost:3001/post/", {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        authorization: this.props.sessionToken,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log("res:", res);
-        if (res.id) {
-          this.setState({
-            post: {
-              titleOfPost: res.titleOfPost,
-              descriptionOfPost: res.descriptionOfPost,
-              url: res.url,
-              imgOfPost: res.imgOfPost,
-              impPost: res.impPost,
-            },
-          });
-        }
-      });
-  }
-
-  componentWillMount() {
-    this.fetchPost();
   }
 
   render() {
     return (
-      <div className="auth-page">
+      <div>
         <div className="container page">
-          <Row></Row>
-
-          <Row></Row>
+          <div className="">
+            <h3>---------</h3>
+            <h3></h3>
+            <h3>---------</h3>
+            <Row>
+              <Col>
+                <Card>
+                  <CardImg
+                    top
+                    width="286"
+                    height="180"
+                    src={StockPostImg}
+                    alt="Your Post Needs An Image"
+                  />
+                  <CardBody>
+                    <CardTitle>
+                      {this.props.user.posts[0].titleOfPost}
+                    </CardTitle>
+                    <CardSubtitle>{this.props.user.posts[0].url}</CardSubtitle>
+                    <CardText>
+                      {this.props.user.posts[0].descriptionOfPost}
+                    </CardText>
+                    <Button>Edit</Button>
+                    <Button>Delete</Button>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </div>
         </div>
       </div>
     );

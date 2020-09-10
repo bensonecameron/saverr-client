@@ -11,6 +11,7 @@ import UserIndex from "./components/userIndex/UserIndex";
 type AcceptedProps = {
   updateToken: (newToken: string) => void;
   sessionToken: string;
+  clearToken: () => void;
 };
 
 // push to git
@@ -19,19 +20,17 @@ export default class Routes extends React.Component<AcceptedProps> {
   render() {
     return (
       <Switch>
-        {/* <Route path="/" component={GlobalFeed} exact />
+        <Route path="/" component={GlobalFeed} exact />
         <Route path="/login">
-          <Auth updateToken={this.props.updateToken} />{' '}
+          <Auth updateToken={this.props.updateToken} />{" "}
         </Route>
         <Route path="/register">
           <Auth updateToken={this.props.updateToken} />
         </Route>
         <Route path="/profile/:slug" component={Profile} />
         <Route path="/collection-index" component={CollectionIndex} />
-        <Route path="/post-index">
-          <PostIndex sessionToken={this.props.sessionToken} />
-        </Route>
-        <Route path="/user-index" component={UserIndex} /> */}
+        <Route path="/user-index" component={UserIndex} />
+        <Route path="/post-index" component={PostIndex} />
       </Switch>
     );
   }

@@ -12,6 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -34,38 +35,42 @@ export default class UserIndex extends React.Component<
     };
   }
 
-  fetchUser() {
+  fetchUserInfo() {
     let user = this.state.user;
     this.setState({ user: user });
 
-    fetch("http://localhost:3001/user/", {
+    fetch(`${APIURL}/user/`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        authorization: this.props.sessionToken,
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk5NTg2NzcxLCJleHAiOjE1OTk2NzMxNzF9.73IVxTxJ8WT7VV8yo_n42EAzGH70HezON3iEV0ZEEfw",
       },
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("res:", res);
+        console.log("User Info fetch res", res);
+        console.log("User Info fetch res", res);
         if (res.id) {
           this.setState({
             user: {
               userName: res.user.userName,
             },
           });
+          console.log("props from user index:", this.props);
+          console.log("props from user index:", this.props);
         }
       });
   }
 
   componentWillMount() {
-    this.fetchUser();
+    this.fetchUserInfo();
   }
 
   render() {
     return (
-      <div className="auth-page">
-        <div className="container page"></div>
+      <div className="">
+        <div className="">{this.state.user.userName}</div>
       </div>
     );
   }

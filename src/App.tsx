@@ -50,6 +50,7 @@ export default class App extends React.Component<{}, AuthState> {
           ) : (
             <Routes
               sessionToken={this.state.sessionToken}
+              clearToken={() => this.clearToken()}
               updateToken={(newToken) => {
                 this.updateToken(newToken);
               }}

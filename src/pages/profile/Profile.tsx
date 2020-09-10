@@ -1,12 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
-import { CollectionType, UserType } from "../../components/types/Types";
+import { UserType } from "../../components/types/Types";
 import Topbar from "../../components/Topbar";
-import Profile from "../profile/Profile";
-import User from "./User";
 import PostIndex from "../../components/saverrIndex/PostIndex";
-import { timeStamp } from "console";
-import { userInfo } from "os";
+import APIURL from "../../helpers/environment";
+import UserIndex from "../../components/userIndex/UserIndex";
+import { Modal, Row, Col, Card } from "reactstrap";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -24,8 +23,8 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
       user: {
         id: 0,
         userName: "",
-        collections: [],
-        posts: [],
+        collections: [{}],
+        posts: [{}],
       },
     };
   }
@@ -35,7 +34,7 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
     user.id = 0;
     this.setState({ user: user });
 
-    fetch(`http://localhost:3001/user/getuser`, {
+    fetch(`${APIURL}/user/getuser`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -44,16 +43,19 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log("res:", res);
+        console.log();
         if (res.id) {
           this.setState({
             user: {
               id: res.id,
               userName: res.userName,
               collections: res.collections,
-              posts: res.post,
+              posts: res.posts,
             },
           });
+          // console.log("res.post", res.posts[3].descriptionOfPost);
+          // console.log("collections:", res.collections);
+          // console.log("drill to post", res.posts[3].id);
         }
       })
       .catch((err) => {
@@ -65,32 +67,45 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
     this.fetchUser();
   }
 
+  PostMapp() {
+    return this.state.user.posts[0].reverse().map((posts, index) => {
+      return (
+        <Card>
+          <div>
+            <h2>Heyy </h2>
+          </div>
+        </Card>
+      );
+    });
+  }
+
   render() {
     return (
-      <div className="main">
-        <div className="mainDiv">
+      <div className="container page">
+        <div className="">
+          <h2>{this.state.user.userName}</h2>
+          <h3>{this.PostMapp}</h3>
           <BrowserRouter>
-            <Topbar clearToken={() => this.props.clearToken()} />
-            {this.state.user.id !== 0 ? (
-              <Switch>
-                <Route exact path="/">
-                  <Profile
-                    clearToken={() => {
-                      this.props.clearToken();
-                    }}
-                    sessionToken={this.props.sessionToken}
-                  />
-                </Route>
-                <Route exact path="/myposts">
+            <Switch>
+              <Row>
+                <Col>
                   <PostIndex
                     user={this.state.user}
                     fetchUser={() => this.fetchUser()}
                     sessionToken={this.props.sessionToken}
-                    collections={this.state.user.collections}
+                    collections={this.state.user.collections || []}
                   />
-                </Route>
-              </Switch>
-            ) : null}
+                </Col>
+              </Row>
+              {/* <Route exact path="/myposts">
+                <PostIndex
+                  user={this.state.user}
+                  fetchUser={() => this.fetchUser()}
+                  sessionToken={this.props.sessionToken}
+                  collections={this.state.user.collections || []}
+                />
+              </Route> */}
+            </Switch>
           </BrowserRouter>
         </div>
       </div>

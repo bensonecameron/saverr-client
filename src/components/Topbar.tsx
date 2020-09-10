@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, Route } from "react-router-dom";
+import Logout from "../pages/auth/Logout";
 
 type AcceptedProps = {
   clearToken: () => void;
@@ -28,6 +29,21 @@ export default class Topbar extends React.Component<AcceptedProps> {
               <NavLink to="/register" className="nav-link">
                 Sign Up
               </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/"
+                className="nav-link"
+                onClick={() => this.props.clearToken()}
+                id="logout"
+              >
+                Logout
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <Route path="/logout">
+                <Logout clearToken={this.props.clearToken} />
+              </Route>
             </li>
           </ul>
         </div>

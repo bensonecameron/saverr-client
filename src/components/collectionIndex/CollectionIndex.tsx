@@ -12,6 +12,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -40,7 +41,7 @@ export default class CollectionIndex extends React.Component<
     //   let collection = this.state.collection
     //   this.setState({collection: collection})
 
-    //   fetch('http://localhost:3001/collection/', {
+    //   fetch(`${APIURL}/collection/`, {
     //     method: 'GET',
     //     headers: {
     //       'content-type': 'application/json',
