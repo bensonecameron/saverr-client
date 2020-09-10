@@ -74,7 +74,7 @@ export default class Login extends React.Component<AcceptedProps, LoginInfo> {
                   </fieldset>
                   <fieldset className="form-group">
                     <input
-                      type="text"
+                      type="password"
                       className="form-control form-control-lg"
                       placeholder="Password"
                       value={this.state.password}

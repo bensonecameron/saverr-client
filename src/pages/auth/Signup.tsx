@@ -101,7 +101,7 @@ export default class Signup extends React.Component<AcceptedProps, SigninInfo> {
                   </fieldset>
                   <fieldset className="form-group">
                     <input
-                      type="text"
+                      type="email"
                       className="form-control form-control-lg"
                       placeholder="Email"
                       value={this.state.email}
@@ -123,7 +123,7 @@ export default class Signup extends React.Component<AcceptedProps, SigninInfo> {
                   </fieldset>
                   <fieldset className="form-group">
                     <input
-                      type="text"
+                      type="password"
                       className="form-control form-control-lg"
                       placeholder="Password"
                       value={this.state.password}

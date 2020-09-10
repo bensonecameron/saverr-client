@@ -6,6 +6,7 @@ import PostIndex from "../../components/saverrIndex/PostIndex";
 import APIURL from "../../helpers/environment";
 import UserIndex from "../../components/userIndex/UserIndex";
 import { Modal, Row, Col, Card } from "reactstrap";
+import CollectionIndex from "../../components/collectionIndex/CollectionIndex";
 
 type AcceptedProps = {
   sessionToken: string;
@@ -90,6 +91,16 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
               <Row>
                 <Col>
                   <PostIndex
+                    user={this.state.user}
+                    fetchUser={() => this.fetchUser()}
+                    sessionToken={this.props.sessionToken}
+                    collections={this.state.user.collections || []}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <CollectionIndex
                     user={this.state.user}
                     fetchUser={() => this.fetchUser()}
                     sessionToken={this.props.sessionToken}

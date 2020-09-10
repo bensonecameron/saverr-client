@@ -42,9 +42,6 @@ export default class PostIndex extends React.Component<
       <div>
         <div className="container page">
           <div className="">
-            <h3>---------</h3>
-            <h3></h3>
-            <h3>---------</h3>
             <Row>
               <Col>
                 <Card>
