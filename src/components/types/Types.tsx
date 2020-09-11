@@ -18,8 +18,8 @@ export interface PostType {
   titleOfPost?: string;
   descriptionOfPost?: string;
   url?: string;
-  imgOfPost: string;
-  impPost: boolean;
+  imgOfPost?: string;
+  impPost?: boolean;
   userId?: number;
   id?: number;
   collections?: any;
@@ -29,4 +29,5 @@ interface ContentType {
   //may not use this one, stretch goal
   collection?: {};
   post?: {};
+  userId: number;
 }

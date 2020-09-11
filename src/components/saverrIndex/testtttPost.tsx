@@ -1,70 +1,40 @@
 import React, { FormEvent } from "react";
-import { CollectionType, UserType } from "../types/Types";
-import CollectionCreate from "../saverrIndex/CollectionCreate";
-import UpdateCollection from "../saverrIndex/UpdateCollection";
+import sessionToken from "../Topbar";
+import { CollectionType, PostType, UserType } from "../types/Types";
 import { Link } from "react-router-dom";
-import Modal from "react-modal";
+import PostCreate from "./PostCreate";
+import StockPostImg from "../../assets/21948643.png";
 import {
   Card,
   CardImg,
   CardTitle,
   CardBody,
   Button,
-  ModalHeader,
-  ModalFooter,
+  Modal,
   Row,
   Col,
   CardSubtitle,
   CardText,
-  ModalBody,
+  Container,
 } from "reactstrap";
 import APIURL from "../../helpers/environment";
 
-type AcceptedProps = {
+interface AcceptedProps {
   sessionToken: string;
   user: UserType;
   collections: CollectionType[];
 
   fetchUser: () => void;
-};
+}
 
-type CollectionState = {
-  collection: CollectionType;
+interface PostState {
+  posts: PostType;
   modalOpen: boolean;
-};
+}
 
-class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
+class PostIndex extends React.Component<AcceptedProps, PostState> {
   constructor(props: AcceptedProps) {
     super(props);
-    this.state = {
-      modalOpen: false,
-      collection: {
-        nameOfCollection: "",
-        decriptionOfCollection: "",
-      },
-    };
-  }
-
-  componentDidMount() {
-    fetch(`http://localhost:3001/collection`, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk5ODI5MTIwLCJleHAiOjE1OTk5MTU1MjB9.s1Eqm9FmBJKXoce5NwHFNLHx-ZcDTC0UEBEpLZbwlY8",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          collection: {
-            nameOfCollection: res.nameOfCollection,
-            decriptionOfCollection: res.descriptionOfCollection,
-          },
-        });
-        console.log("user id =", this.props.user.id);
-      });
   }
 
   render() {
@@ -82,15 +52,9 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
                     this.setState({ modalOpen: !this.state.modalOpen });
                   }}
                 >
-                  New Collection
+                  New Post
                 </Button>
-                <UpdateCollection
-                  user={this.props.user}
-                  collection={this.props.user.collections}
-                  fetchUser={() => this.props.fetchUser()}
-                  sessionToken={this.props.sessionToken}
-                ></UpdateCollection>
-                <Row>
+                {/* <Row>
                   {this.state.modalOpen === true ? (
                     //   ideally the collection create would appear in a modal
 
@@ -100,12 +64,12 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
                     //     sessionToken={this.props.sessionToken}
                     //   />
                     // </Modal>
-                    <CollectionCreate
+                    <PostCreate
                       fetchUser={() => this.props.fetchUser()}
                       sessionToken={this.props.sessionToken}
                     />
                   ) : null}
-                </Row>
+                </Row> */}
                 {/* <CollectionCreate
                   fetchUser={() => this.props.fetchUser()}
                   sessionToken={this.props.sessionToken}
@@ -116,8 +80,8 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
                     <Col>
                       <Card>
                         <CardBody>
-                          <CardTitle>Collection Title</CardTitle>
-                          <CardText>Collection Description goes here</CardText>
+                          <CardTitle>Post Title</CardTitle>
+                          <CardText>Post Description goes here</CardText>
                           <Button>Go</Button>
                         </CardBody>
                       </Card>
@@ -133,4 +97,4 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
   }
 }
 
-export default CollectionIndex;
+export default PostIndex;

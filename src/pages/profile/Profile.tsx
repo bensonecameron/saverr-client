@@ -5,7 +5,7 @@ import Topbar from "../../components/Topbar";
 import PostIndex from "../../components/saverrIndex/PostIndex";
 import APIURL from "../../helpers/environment";
 import UserIndex from "../../components/userIndex/UserIndex";
-import { Modal, Row, Col, Card } from "reactstrap";
+import { Modal, Row, Col, Card, Container, Button } from "reactstrap";
 import CollectionIndex from "../../components/collectionIndex/CollectionIndex";
 
 type AcceptedProps = {
@@ -15,12 +15,14 @@ type AcceptedProps = {
 
 interface ProfileState {
   user: UserType;
+  showCollections: boolean;
 }
 
 export default class Home extends React.Component<AcceptedProps, ProfileState> {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
+      showCollections: true,
       user: {
         id: 0,
         userName: "",
@@ -47,6 +49,7 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
         console.log();
         if (res.id) {
           this.setState({
+            showCollections: true,
             user: {
               id: res.id,
               userName: res.userName,
@@ -68,46 +71,46 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
     this.fetchUser();
   }
 
-  PostMapp() {
-    return this.state.user.posts[0].reverse().map((posts, index) => {
-      return (
-        <Card>
-          <div>
-            <h2>Heyy </h2>
-          </div>
-        </Card>
-      );
-    });
-  }
-
   render() {
     return (
       <div className="container page">
         <div className="">
           <h2>{this.state.user.userName}</h2>
-          <h3>{this.PostMapp}</h3>
           <BrowserRouter>
             <Switch>
-              <Row>
-                <Col>
-                  <PostIndex
-                    user={this.state.user}
-                    fetchUser={() => this.fetchUser()}
-                    sessionToken={this.props.sessionToken}
-                    collections={this.state.user.collections || []}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <CollectionIndex
-                    user={this.state.user}
-                    fetchUser={() => this.fetchUser()}
-                    sessionToken={this.props.sessionToken}
-                    collections={this.state.user.collections || []}
-                  />
-                </Col>
-              </Row>
+              <Container>
+                <Row>
+                  <Col m={3}>
+                    <Button
+                      id="togglebutton"
+                      onClick={() => {
+                        this.setState({
+                          showCollections: !this.state.showCollections,
+                        });
+                      }}
+                    >
+                      Toggle Post / Colelction
+                    </Button>
+                    <Row>
+                      {this.state.showCollections === false ? (
+                        <PostIndex
+                          user={this.state.user}
+                          fetchUser={() => this.fetchUser()}
+                          sessionToken={this.props.sessionToken}
+                          collections={this.state.user.collections || []}
+                        />
+                      ) : (
+                        <CollectionIndex
+                          user={this.state.user}
+                          fetchUser={() => this.fetchUser()}
+                          sessionToken={this.props.sessionToken}
+                          collections={this.state.user.collections || []}
+                        />
+                      )}
+                    </Row>
+                  </Col>
+                </Row>
+              </Container>
               {/* <Route exact path="/myposts">
                 <PostIndex
                   user={this.state.user}

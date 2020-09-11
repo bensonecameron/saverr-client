@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import APIURL from "../../helpers/environment";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 type AcceptedProps = {
   updateToken: (newToken: string) => void;

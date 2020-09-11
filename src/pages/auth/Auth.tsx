@@ -1,6 +1,7 @@
 import React from "react";
 import Signup from "./Signup";
 import Login from "./Login";
+import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 type AcceptedProps = {
   updateToken: (newToken: string) => void;
@@ -17,6 +18,9 @@ export default class Auth extends React.Component<AcceptedProps, AuthState> {
       signupReqest: false,
     };
   }
+
+  urlLookup() {}
+
   render() {
     return (
       <div className="">

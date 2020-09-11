@@ -31,6 +31,7 @@ export default class Routes extends React.Component<AcceptedProps> {
         <Route path="/collection-index" component={CollectionIndex} />
         <Route path="/user-index" component={UserIndex} />
         <Route path="/post-index" component={PostIndex} />
+        <Route path="/collection-index" component={CollectionIndex} />
       </Switch>
     );
   }
