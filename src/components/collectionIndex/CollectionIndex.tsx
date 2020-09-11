@@ -1,9 +1,8 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { CollectionType, UserType } from "../types/Types";
 import CollectionCreate from "../saverrIndex/CollectionCreate";
 import UpdateCollection from "../saverrIndex/UpdateCollection";
 import { Link } from "react-router-dom";
-import Modal from "react-modal";
 import {
   Card,
   CardImg,
@@ -17,6 +16,7 @@ import {
   CardSubtitle,
   CardText,
   ModalBody,
+  Modal,
 } from "reactstrap";
 import APIURL from "../../helpers/environment";
 
@@ -30,14 +30,14 @@ type AcceptedProps = {
 
 type CollectionState = {
   collection: CollectionType;
-  modalOpen: boolean;
+  UpdateCollectionModalOpen: boolean;
 };
 
 class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      modalOpen: false,
+      UpdateCollectionModalOpen: false,
       collection: {
         nameOfCollection: "",
         decriptionOfCollection: "",
@@ -67,6 +67,12 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
       });
   }
 
+  toggleModal() {
+    this.setState({
+      UpdateCollectionModalOpen: !this.state.UpdateCollectionModalOpen,
+    });
+  }
+
   render() {
     return (
       <div>
@@ -76,22 +82,43 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
               <h2></h2>
               <div>
                 <h2> Add New Collection</h2>
-                <Button
-                  id="togglebutton"
-                  onClick={() => {
-                    this.setState({ modalOpen: !this.state.modalOpen });
-                  }}
-                >
-                  New Collection
-                </Button>
+                <Row>
+                  <Button
+                    id="togglebutton"
+                    onClick={() => {
+                      this.setState({
+                        UpdateCollectionModalOpen: !this.state
+                          .UpdateCollectionModalOpen,
+                      });
+                    }}
+                  >
+                    New Collection
+                  </Button>
+                </Row>
+                <Row>
+                  <Button color="primary" onClick={this.toggleModal.bind(this)}>
+                    Open Modal
+                  </Button>
+                  <Modal isOpen={this.state.UpdateCollectionModalOpen}>
+                    <ModalHeader toggle={this.toggleModal.bind(this)}>
+                      Modal Title
+                    </ModalHeader>
+                    <ModalBody> blah blah blah</ModalBody>
+                    <Button
+                      color="secondary"
+                      onClick={this.toggleModal.bind(this)}
+                    >
+                      Close Modal UpdateCollection
+                    </Button>
+                  </Modal>
+                </Row>
                 <UpdateCollection
                   user={this.props.user}
-                  collection={this.props.user.collections}
                   fetchUser={() => this.props.fetchUser()}
                   sessionToken={this.props.sessionToken}
                 ></UpdateCollection>
                 <Row>
-                  {this.state.modalOpen === true ? (
+                  {this.state.UpdateCollectionModalOpen === true ? (
                     //   ideally the collection create would appear in a modal
 
                     //   <Modal>

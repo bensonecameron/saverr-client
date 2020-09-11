@@ -5477,7 +5477,7 @@ button.close {
   -webkit-appearance: none;
 }
 
-.modal-open {
+/* .modal-open {
   overflow: hidden;
 }
 
@@ -5600,7 +5600,7 @@ button.close {
   .modal-lg {
     max-width: 900px;
   }
-}
+} */
 
 .tooltip {
   position: absolute;

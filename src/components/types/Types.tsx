@@ -11,7 +11,7 @@ export interface CollectionType {
   decriptionOfCollection?: string;
   impCollection?: boolean;
   userId?: number;
-  id?: number;
+  id?: any; // had to change this to any for "e.target.value" to work with put by id
   posts?: any;
 }
 export interface PostType {
@@ -21,7 +21,7 @@ export interface PostType {
   imgOfPost?: string;
   impPost?: boolean;
   userId?: number;
-  id?: number;
+  id?: any; // had to change this to any for "e.target.value" to work with put by id
   collections?: any;
 }
 

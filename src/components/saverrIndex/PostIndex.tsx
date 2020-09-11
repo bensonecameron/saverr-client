@@ -3,6 +3,7 @@ import sessionToken from "../Topbar";
 import { CollectionType, PostType, UserType } from "../types/Types";
 import { Link } from "react-router-dom";
 import PostCreate from "./PostCreate";
+import PostUpdate from "./PostUpdate";
 import StockPostImg from "../../assets/21948643.png";
 import {
   Card,
@@ -108,6 +109,11 @@ export default class PostIndex extends React.Component<
                   />
                 ) : null}
               </Row>
+              <PostUpdate
+                fetchUser={() => this.props.fetchUser()}
+                sessionToken={this.props.sessionToken}
+                posts={this.state.posts}
+              />
               <Row>
                 <Col>
                   <Card>

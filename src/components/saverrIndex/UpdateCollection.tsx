@@ -10,17 +10,21 @@ import {
   Button,
   Modal,
   ModalBody,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
+  DropdownToggle,
 } from "reactstrap";
 
 type AcceptedProps = {
   sessionToken: string;
-  collection: CollectionType;
   user: UserType;
   fetchUser: () => void;
 };
 
 type CollectionState = {
-  collectionToEdit: CollectionType;
+  collection: CollectionType;
+  collectionDropdownOpen: boolean;
 };
 
 export default class UpdateCollection extends React.Component<
@@ -30,7 +34,8 @@ export default class UpdateCollection extends React.Component<
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      collectionToEdit: {
+      collectionDropdownOpen: false,
+      collection: {
         id: 0,
         nameOfCollection: "",
         decriptionOfCollection: "",
@@ -38,86 +43,93 @@ export default class UpdateCollection extends React.Component<
     };
   }
 
-  handleSubmit(e: FormEvent) {
+  handleCollectionEdit(e: FormEvent) {
+    let collectionPutURL = `http://localhost:3001/collection/${this.state.collection.id}`;
     e.preventDefault();
-    fetch(`http://localhost:3001/collection/${this.props.collection.id}`, {
+    fetch("http://localhost:3001/collection/5", {
       method: "PUT",
       headers: {
         "content-type": "application/json",
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk5ODI5MTIwLCJleHAiOjE1OTk5MTU1MjB9.s1Eqm9FmBJKXoce5NwHFNLHx-ZcDTC0UEBEpLZbwlY8",
       },
-      body: JSON.stringify({
-        collectionToEdit: {
-          nameOfCollection: this.state.collectionToEdit.nameOfCollection,
-          decriptionOfCollection: this.state.collectionToEdit
-            .decriptionOfCollection,
-        },
-      }),
-    }).then((res) => res.json());
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          collection: {
+            id: this.state.collection.id,
+            nameOfCollection: this.state.collection.nameOfCollection,
+            decriptionOfCollection: this.state.collection
+              .decriptionOfCollection,
+          },
+        });
+        console.log(
+          "collection put state",
+          this.state.collection.nameOfCollection,
+          "description",
+          this.state.collection.decriptionOfCollection
+        );
+        console.log("collection put URL", collectionPutURL);
+        console.log("PUT res:", res);
+      });
   }
-
   render() {
     return (
       <div>
-        <Modal isOpen={true}>
-          <Button
-          // onClick={() => {
-          //   this.state.collectionToEdit({
-          //     nameOfCollection: "",
-          //     decriptionOfCollection: "",
-          //   });
-          // }}
+        <div>
+          <Form
+            onSubmit={(e: FormEvent) => {
+              this.handleCollectionEdit(e);
+            }}
           >
-            CANCEL
-          </Button>
-          <ModalBody>
-            <Form
-              onSubmit={(e: FormEvent) => {
-                this.handleSubmit(e);
-              }}
-            >
-              <h3 id="update">Update Collection</h3>
-              <FormGroup>
-                <Label htmlFor="name">Name:</Label>
-                <Input
-                  name="name"
-                  value={this.state.collectionToEdit.nameOfCollection}
-                  onChange={(e) => {
-                    let collection = this.state.collectionToEdit;
-                    collection.nameOfCollection = e.target.value;
-                    this.setState({ collectionToEdit: collection });
-                  }}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="description">description:</Label>
-                <Input
-                  name="description"
-                  value={this.state.collectionToEdit.nameOfCollection}
-                  onChange={(e) => {
-                    let collection = this.state.collectionToEdit;
-                    collection.decriptionOfCollection = e.target.value;
-                    this.setState({ collectionToEdit: collection });
-                  }}
-                  type="textarea"
-                  draggable="false"
-                  maxLength={250}
-                ></Input>
-              </FormGroup>
-              <FormGroup>
-                <Button
-                  id="updateButton"
-                  disabled={
-                    !this.state.collectionToEdit.decriptionOfCollection &&
-                    !this.state.collectionToEdit.decriptionOfCollection
-                  }
-                  type="submit"
-                >
-                  UPDATE
-                </Button>
-              </FormGroup>
-            </Form>
-          </ModalBody>
-        </Modal>
+            <FormGroup>
+              <Label htmlFor="ID">ID:</Label>
+              <Input
+                name="id"
+                value={this.state.collection.id}
+                onChange={(e) => {
+                  let collection = this.state.collection;
+                  this.state.collection.id = e.target.value;
+                  this.setState({ collection: collection });
+                }}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="name">Name:</Label>
+              <Input
+                name="name"
+                value={this.state.collection.nameOfCollection}
+                onChange={(e) => {
+                  let collection = this.state.collection;
+                  collection.nameOfCollection = e.target.value;
+                  this.setState({ collection: collection });
+                }}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="description">description:</Label>
+              <Input
+                name="description"
+                value={this.state.collection.decriptionOfCollection}
+                onChange={(e) => {
+                  let collection = this.state.collection;
+                  collection.decriptionOfCollection = e.target.value;
+                  this.setState({ collection: collection });
+                }}
+                type="textarea"
+                draggable="false"
+                maxLength={250}
+              ></Input>
+            </FormGroup>
+            <FormGroup>
+              <Button id="updateButton" type="submit">
+                UPDATE
+              </Button>
+            </FormGroup>
+          </Form>
+        </div>
       </div>
     );
   }
