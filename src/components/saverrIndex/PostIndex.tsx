@@ -4,6 +4,7 @@ import { CollectionType, PostType, UserType } from "../types/Types";
 import { Link } from "react-router-dom";
 import PostCreate from "./PostCreate";
 import PostUpdate from "./PostUpdate";
+import PostDelete from "./PostDelete";
 import StockPostImg from "../../assets/21948643.png";
 import {
   Card,
@@ -28,8 +29,14 @@ interface AcceptedProps {
 }
 
 interface PostState {
-  posts: PostType;
-  modalOpen: boolean;
+  id: any;
+  titleOfPost: string;
+  descriptionOfPost: string;
+  url?: string;
+  imgOfPost: string;
+  createPostModal: boolean;
+  editModalOpen: boolean;
+  deletePostOpen: boolean;
 }
 
 export default class PostIndex extends React.Component<
@@ -39,38 +46,37 @@ export default class PostIndex extends React.Component<
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      modalOpen: false,
-      posts: {
-        titleOfPost: "",
-        descriptionOfPost: "",
-        url: "",
-        imgOfPost: "",
-        collections: "",
-      },
+      editModalOpen: false,
+      deletePostOpen: false,
+      createPostModal: false,
+      id: 0,
+      titleOfPost: "",
+      descriptionOfPost: "",
+      url: "",
+      imgOfPost: "",
     };
   }
   componentDidMount() {
-    fetch(`http://localhost:3001/post`, {
+    fetch(`http://localhost:3001/post/1`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
         authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTk5ODI5MTIwLCJleHAiOjE1OTk5MTU1MjB9.s1Eqm9FmBJKXoce5NwHFNLHx-ZcDTC0UEBEpLZbwlY8",
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAwMDA5NDk1LCJleHAiOjE2MDAwOTU4OTV9.TtfpDNn1VzXdKBHWYHayOZ0K74pUt_5pJDq_yEhPJhY",
       },
     })
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
         this.setState({
-          posts: {
-            titleOfPost: res.titleOfPost,
-            descriptionOfPost: res.descriptionOfPost,
-            url: res.url,
-            imgOfPost: res.imgOfPost,
-            collections: res.collections,
-          },
+          id: res.id,
+          titleOfPost: res.titleOFPost,
+          descriptionOfPost: res.descriptionOfPost,
+          url: res.url,
+          imgOfPost: res.imgOfPost,
         });
-        console.log("user id =", this.props.user.id);
+        console.log("res.title", this.state.id);
+        console.log("res.title", res.titleOfPost);
       });
   }
 
@@ -88,32 +94,21 @@ export default class PostIndex extends React.Component<
               <Button
                 id="togglebutton"
                 onClick={() => {
-                  this.setState({ modalOpen: !this.state.modalOpen });
+                  this.setState({
+                    createPostModal: !this.state.createPostModal,
+                  });
                 }}
               >
                 New Post
               </Button>
               <Row>
-                {this.state.modalOpen === true ? (
-                  //   ideally the collection create would appear in a modal
-
-                  //   <Modal>
-                  //                         <CollectionCreate
-                  //     fetchUser={() => this.props.fetchUser()}
-                  //     sessionToken={this.props.sessionToken}
-                  //   />
-                  // </Modal>
+                {this.state.createPostModal === true ? (
                   <PostCreate
                     fetchUser={() => this.props.fetchUser()}
                     sessionToken={this.props.sessionToken}
                   />
                 ) : null}
               </Row>
-              <PostUpdate
-                fetchUser={() => this.props.fetchUser()}
-                sessionToken={this.props.sessionToken}
-                posts={this.state.posts}
-              />
               <Row>
                 <Col>
                   <Card>
@@ -134,10 +129,44 @@ export default class PostIndex extends React.Component<
                       <CardText>
                         {this.props.user.posts[0].descriptionOfPost}
                       </CardText>
-                      <Button>Edit</Button>
-                      <Button>Delete</Button>
+                      <Button
+                        id="togglebutton"
+                        onClick={() => {
+                          this.setState({
+                            editModalOpen: !this.state.editModalOpen,
+                          });
+                        }}
+                      >
+                        Edit Post
+                      </Button>
+                      <Button
+                        id="togglebutton"
+                        onClick={() => {
+                          this.setState({
+                            deletePostOpen: !this.state.deletePostOpen,
+                          });
+                        }}
+                      >
+                        Delete Post
+                      </Button>
                     </CardBody>
                   </Card>
+                  <Row>
+                    {this.state.editModalOpen === true ? (
+                      <PostUpdate
+                        fetchUser={() => this.props.fetchUser()}
+                        sessionToken={this.props.sessionToken}
+                      />
+                    ) : null}
+                  </Row>
+                  <Row>
+                    {this.state.deletePostOpen === true ? (
+                      <PostDelete
+                        fetchUser={() => this.props.fetchUser()}
+                        sessionToken={this.props.sessionToken}
+                      />
+                    ) : null}
+                  </Row>
                 </Col>
               </Row>
             </div>

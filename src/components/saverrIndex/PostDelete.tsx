@@ -1,44 +1,41 @@
 import React, { FormEvent } from "react";
 import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
-import { CollectionType } from "../types/Types";
+import { CollectionType, PostType } from "../types/Types";
 import Collections from "../../pages/collections/Collections";
 import APIURL from "../../helpers/environment";
 
 type AcceptedProps = {
   sessionToken: string;
-
   fetchUser: () => void;
 };
 
-type NewCollectionInfo = {
-  nameOfCollection: string;
-  descriptionOfCollection: string;
+type PostDelState = {
+  id: any;
 };
 
-export default class CollectionCreate extends React.Component<
+export default class PostDelete extends React.Component<
   AcceptedProps,
-  NewCollectionInfo
+  PostDelState
 > {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      nameOfCollection: "",
-      descriptionOfCollection: "",
+      id: 0,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e: FormEvent) {
+  handleSubmit(e) {
     e.preventDefault();
-    fetch("http://localhost:3001/collection/new", {
-      method: "POST",
+    fetch(`http://localhost:3001/post/${this.state.id}`, {
+      method: "Delete",
       headers: {
         "content-type": "application/json",
         authorization:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAwMDA5NDk1LCJleHAiOjE2MDAwOTU4OTV9.TtfpDNn1VzXdKBHWYHayOZ0K74pUt_5pJDq_yEhPJhY",
       },
       body: JSON.stringify({
-        nameOfCollection: this.state.nameOfCollection,
-        descriptionOfCollection: this.state.descriptionOfCollection,
+        id: this.state.id,
       }),
     }).then((res) => res.json());
   }
@@ -48,34 +45,20 @@ export default class CollectionCreate extends React.Component<
       <div className="auth-page">
         <div className="container page">
           <div className="row">
-            <div className="col-md-6 offset-md-3 col-xs-12">
+            <div className="col-md-6 offset-md-3 col-sm-4">
               <form
                 onSubmit={(e) => {
                   this.handleSubmit(e);
                 }}
               >
-                <fieldset>
-                  <fieldset className="form-group">
+                <fieldset className="form-group">
+                  <fieldset>
                     <input
                       type="text"
                       className="form-control form-control-lg"
-                      placeholder="Title Of Collection"
-                      value={this.state.nameOfCollection}
+                      placeholder="Post ID To Edit"
                       onChange={(e) => {
-                        this.setState({ nameOfCollection: e.target.value });
-                      }}
-                    />
-                  </fieldset>
-                  <fieldset className="form-group">
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      placeholder="Collection Description"
-                      value={this.state.descriptionOfCollection}
-                      onChange={(e) => {
-                        this.setState({
-                          descriptionOfCollection: e.target.value,
-                        });
+                        this.setState({ id: e.target.value });
                       }}
                     />
                   </fieldset>
@@ -83,7 +66,7 @@ export default class CollectionCreate extends React.Component<
                     className="btn btn-lg btn-primary pull-xs-right"
                     type="submit"
                   >
-                    Create Collection
+                    Delete Post
                   </button>
                 </fieldset>
               </form>
