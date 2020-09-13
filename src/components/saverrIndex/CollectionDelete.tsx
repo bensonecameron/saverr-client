@@ -9,30 +9,26 @@ type AcceptedProps = {
   fetchUser: () => void;
 };
 
-type NewCollectionInfo = {
-  id: any; // i had to use any here so that the e.target value would accept the intial state of "0"
-  nameOfCollection: string;
-  descriptionOfCollection: string;
+type CollectionDelState = {
+  id: any;
 };
 
-export default class UpdateCollection extends React.Component<
+export default class CollectionDelete extends React.Component<
   AcceptedProps,
-  NewCollectionInfo
+  CollectionDelState
 > {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
       id: 0,
-      nameOfCollection: "",
-      descriptionOfCollection: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e: FormEvent) {
+  handleSubmit(e) {
     e.preventDefault();
     fetch(`http://localhost:3001/collection/${this.state.id}`, {
-      method: "PUT",
+      method: "Delete",
       headers: {
         "content-type": "application/json",
         authorization:
@@ -40,11 +36,8 @@ export default class UpdateCollection extends React.Component<
       },
       body: JSON.stringify({
         id: this.state.id,
-        nameOfCollection: this.state.nameOfCollection,
-        descriptionOfCollection: this.state.descriptionOfCollection,
       }),
     }).then((res) => res.json());
-    console.log("update collection URL:", this.state.id);
   }
 
   render() {
@@ -61,37 +54,11 @@ export default class UpdateCollection extends React.Component<
                 <fieldset className="form-group">
                   <fieldset>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control form-control-lg"
-                      placeholder="Collection ID To Edit"
+                      placeholder="Post ID To Edit"
                       onChange={(e) => {
                         this.setState({ id: e.target.value });
-                      }}
-                    />
-                  </fieldset>
-                </fieldset>
-                <fieldset>
-                  <fieldset className="form-group">
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      placeholder="Collection Name"
-                      value={this.state.nameOfCollection}
-                      onChange={(e) => {
-                        this.setState({ nameOfCollection: e.target.value });
-                      }}
-                    />
-                  </fieldset>
-                  <fieldset className="form-group">
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      placeholder="Collection Description"
-                      value={this.state.descriptionOfCollection}
-                      onChange={(e) => {
-                        this.setState({
-                          descriptionOfCollection: e.target.value,
-                        });
                       }}
                     />
                   </fieldset>
@@ -99,7 +66,7 @@ export default class UpdateCollection extends React.Component<
                     className="btn btn-lg btn-primary pull-xs-right"
                     type="submit"
                   >
-                    Update Collection
+                    Delete Collection
                   </button>
                 </fieldset>
               </form>

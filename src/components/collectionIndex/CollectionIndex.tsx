@@ -1,7 +1,9 @@
 import React, { FormEvent, useState } from "react";
 import { CollectionType, UserType } from "../types/Types";
+import StockPostImg from "../../assets/21948643.png";
 import CollectionCreate from "../saverrIndex/CollectionCreate";
 import UpdateCollection from "../saverrIndex/UpdateCollection";
+import CollectionDelete from "../saverrIndex/CollectionDelete";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -29,8 +31,13 @@ type AcceptedProps = {
 };
 
 type CollectionState = {
-  collection: CollectionType;
+  id: any;
+  nameOfCollection: string;
+  decriptionOfCollection: string;
   UpdateCollectionModalOpen: boolean;
+  createCollectionModalOpen: boolean;
+  editCollectionModalOpen: boolean;
+  delteCollectionModalOpen: boolean;
 };
 
 class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
@@ -38,10 +45,12 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
     super(props);
     this.state = {
       UpdateCollectionModalOpen: false,
-      collection: {
-        nameOfCollection: "",
-        decriptionOfCollection: "",
-      },
+      createCollectionModalOpen: false,
+      editCollectionModalOpen: false,
+      delteCollectionModalOpen: false,
+      id: 0,
+      nameOfCollection: "",
+      decriptionOfCollection: "",
     };
   }
 
@@ -58,10 +67,8 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
       .then((res) => {
         console.log(res);
         this.setState({
-          collection: {
-            nameOfCollection: res.nameOfCollection,
-            decriptionOfCollection: res.descriptionOfCollection,
-          },
+          nameOfCollection: res.nameOfCollection,
+          decriptionOfCollection: res.descriptionOfCollection,
         });
         console.log("user id =", this.props.user.id);
       });
@@ -76,82 +83,90 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
   render() {
     return (
       <div>
-        <div>
-          <div className="container page">
-            <div className="">
-              <h2></h2>
-              <div>
-                <h2> Add New Collection</h2>
-                <Row>
-                  <Button
-                    id="togglebutton"
-                    onClick={() => {
-                      this.setState({
-                        UpdateCollectionModalOpen: !this.state
-                          .UpdateCollectionModalOpen,
-                      });
-                    }}
-                  >
-                    New Collection
-                  </Button>
-                </Row>
-                <Row>
-                  <Button color="primary" onClick={this.toggleModal.bind(this)}>
-                    Open Modal
-                  </Button>
-                  <Modal isOpen={this.state.UpdateCollectionModalOpen}>
-                    <ModalHeader toggle={this.toggleModal.bind(this)}>
-                      Modal Title
-                    </ModalHeader>
-                    <ModalBody> blah blah blah</ModalBody>
-                    <Button
-                      color="secondary"
-                      onClick={this.toggleModal.bind(this)}
-                    >
-                      Close Modal UpdateCollection
-                    </Button>
-                  </Modal>
-                </Row>
-                <UpdateCollection
-                  user={this.props.user}
-                  fetchUser={() => this.props.fetchUser()}
-                  sessionToken={this.props.sessionToken}
-                ></UpdateCollection>
-                <Row>
-                  {this.state.UpdateCollectionModalOpen === true ? (
-                    //   ideally the collection create would appear in a modal
-
-                    //   <Modal>
-                    //                         <CollectionCreate
-                    //     fetchUser={() => this.props.fetchUser()}
-                    //     sessionToken={this.props.sessionToken}
-                    //   />
-                    // </Modal>
-                    <CollectionCreate
-                      fetchUser={() => this.props.fetchUser()}
-                      sessionToken={this.props.sessionToken}
+        <div className="container page">
+          <div className="">
+            <div>
+              <Button
+                id="togglebutton"
+                onClick={() => {
+                  this.setState({
+                    createCollectionModalOpen: !this.state
+                      .createCollectionModalOpen,
+                  });
+                }}
+              >
+                Click Here To Create New Collection
+              </Button>
+              <Row>
+                {this.state.createCollectionModalOpen === true ? (
+                  <CollectionCreate
+                    fetchUser={() => this.props.fetchUser()}
+                    sessionToken={this.props.sessionToken}
+                  />
+                ) : null}
+              </Row>
+              <Row>
+                <Col>
+                  <Card>
+                    <CardImg
+                      top
+                      width="286"
+                      height="180"
+                      src={StockPostImg}
+                      alt="Your Post Needs An Image"
                     />
-                  ) : null}
-                </Row>
-                {/* <CollectionCreate
-                  fetchUser={() => this.props.fetchUser()}
-                  sessionToken={this.props.sessionToken}
-                /> */}
-                <h2> ---------</h2>
-                <div>
+                    <CardBody>
+                      <CardTitle>
+                        {this.props.user.collections[0].titleOfCollection}
+                      </CardTitle>
+                      <CardSubtitle>
+                        {this.props.user.posts[0].url}
+                      </CardSubtitle>
+                      <CardText>
+                        {this.props.user.collections[0].descriptionOfCollection}
+                      </CardText>
+                      <Button
+                        id="togglebutton"
+                        onClick={() => {
+                          this.setState({
+                            editCollectionModalOpen: !this.state
+                              .editCollectionModalOpen,
+                          });
+                        }}
+                      >
+                        Edit Collection
+                      </Button>
+                      <Button
+                        id="togglebutton"
+                        onClick={() => {
+                          this.setState({
+                            delteCollectionModalOpen: !this.state
+                              .delteCollectionModalOpen,
+                          });
+                        }}
+                      >
+                        Delete Collection
+                      </Button>
+                    </CardBody>
+                  </Card>
                   <Row>
-                    <Col>
-                      <Card>
-                        <CardBody>
-                          <CardTitle>Collection Title</CardTitle>
-                          <CardText>Collection Description goes here</CardText>
-                          <Button>Go</Button>
-                        </CardBody>
-                      </Card>
-                    </Col>
+                    {this.state.editCollectionModalOpen === true ? (
+                      <UpdateCollection
+                        fetchUser={() => this.props.fetchUser()}
+                        sessionToken={this.props.sessionToken}
+                      />
+                    ) : null}
                   </Row>
-                </div>
-              </div>
+                  <Row>
+                    {this.state.delteCollectionModalOpen === true ? (
+                      <CollectionDelete
+                        fetchUser={() => this.props.fetchUser()}
+                        sessionToken={this.props.sessionToken}
+                      />
+                    ) : null}
+                  </Row>
+                </Col>
+              </Row>
             </div>
           </div>
         </div>
