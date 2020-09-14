@@ -1,5 +1,4 @@
 import React, { FormEvent } from "react";
-import sessionToken from "../Topbar";
 import { UserType } from "../types/Types";
 import { Link } from "react-router-dom";
 import {

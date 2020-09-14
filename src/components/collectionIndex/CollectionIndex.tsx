@@ -82,93 +82,94 @@ class CollectionIndex extends React.Component<AcceptedProps, CollectionState> {
 
   render() {
     return (
-      <div>
+      <div className="article-page">
+        <div className="banner">
+          <div className="container">
+            <h2>Your Collection</h2>
+          </div>
+        </div>
         <div className="container page">
-          <div className="">
-            <div>
-              <Button
-                id="togglebutton"
-                onClick={() => {
-                  this.setState({
-                    createCollectionModalOpen: !this.state
-                      .createCollectionModalOpen,
-                  });
-                }}
-              >
-                Click Here To Create New Collection
-              </Button>
+          <Button
+            color="info"
+            onClick={() => {
+              this.setState({
+                createCollectionModalOpen: !this.state
+                  .createCollectionModalOpen,
+              });
+            }}
+          >
+            Click Here To Create New Collection
+          </Button>
+          <br></br>
+          {this.state.createCollectionModalOpen === true ? (
+            <CollectionCreate
+              fetchUser={() => this.props.fetchUser()}
+              sessionToken={this.props.sessionToken}
+            />
+          ) : null}
+          <Row>
+            <Col>
+              <Card>
+                <CardImg
+                  top
+                  width="286"
+                  height="180"
+                  src={StockPostImg}
+                  alt="Your Post Needs An Image"
+                />
+                <CardBody>
+                  <CardTitle>
+                    {this.props.user.collections[0].titleOfCollection}
+                  </CardTitle>
+                  <CardSubtitle>{this.props.user.posts[0].url}</CardSubtitle>
+                  <CardText>
+                    {this.props.user.collections[0].descriptionOfCollection}
+                  </CardText>
+                  <Button
+                    color="warning"
+                    id="togglebutton"
+                    onClick={() => {
+                      this.setState({
+                        editCollectionModalOpen: !this.state
+                          .editCollectionModalOpen,
+                      });
+                    }}
+                  >
+                    Edit Collection
+                  </Button>
+                  <Button
+                    className=" pull-xs-right"
+                    color="danger"
+                    id="togglebutton"
+                    onClick={() => {
+                      this.setState({
+                        delteCollectionModalOpen: !this.state
+                          .delteCollectionModalOpen,
+                      });
+                    }}
+                  >
+                    Delete Collection
+                  </Button>
+                </CardBody>
+              </Card>
               <Row>
-                {this.state.createCollectionModalOpen === true ? (
-                  <CollectionCreate
+                {this.state.editCollectionModalOpen === true ? (
+                  <UpdateCollection
                     fetchUser={() => this.props.fetchUser()}
                     sessionToken={this.props.sessionToken}
                   />
                 ) : null}
               </Row>
               <Row>
-                <Col>
-                  <Card>
-                    <CardImg
-                      top
-                      width="286"
-                      height="180"
-                      src={StockPostImg}
-                      alt="Your Post Needs An Image"
-                    />
-                    <CardBody>
-                      <CardTitle>
-                        {this.props.user.collections[0].titleOfCollection}
-                      </CardTitle>
-                      <CardSubtitle>
-                        {this.props.user.posts[0].url}
-                      </CardSubtitle>
-                      <CardText>
-                        {this.props.user.collections[0].descriptionOfCollection}
-                      </CardText>
-                      <Button
-                        id="togglebutton"
-                        onClick={() => {
-                          this.setState({
-                            editCollectionModalOpen: !this.state
-                              .editCollectionModalOpen,
-                          });
-                        }}
-                      >
-                        Edit Collection
-                      </Button>
-                      <Button
-                        id="togglebutton"
-                        onClick={() => {
-                          this.setState({
-                            delteCollectionModalOpen: !this.state
-                              .delteCollectionModalOpen,
-                          });
-                        }}
-                      >
-                        Delete Collection
-                      </Button>
-                    </CardBody>
-                  </Card>
-                  <Row>
-                    {this.state.editCollectionModalOpen === true ? (
-                      <UpdateCollection
-                        fetchUser={() => this.props.fetchUser()}
-                        sessionToken={this.props.sessionToken}
-                      />
-                    ) : null}
-                  </Row>
-                  <Row>
-                    {this.state.delteCollectionModalOpen === true ? (
-                      <CollectionDelete
-                        fetchUser={() => this.props.fetchUser()}
-                        sessionToken={this.props.sessionToken}
-                      />
-                    ) : null}
-                  </Row>
-                </Col>
+                {this.state.delteCollectionModalOpen === true ? (
+                  <CollectionDelete
+                    fetchUser={() => this.props.fetchUser()}
+                    sessionToken={this.props.sessionToken}
+                  />
+                ) : null}
               </Row>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </div>
       </div>
     );

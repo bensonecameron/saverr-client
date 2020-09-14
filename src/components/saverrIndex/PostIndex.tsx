@@ -1,5 +1,4 @@
 import React, { FormEvent } from "react";
-import sessionToken from "../Topbar";
 import { CollectionType, PostType, UserType } from "../types/Types";
 import { Link } from "react-router-dom";
 import PostCreate from "./PostCreate";
@@ -86,91 +85,92 @@ export default class PostIndex extends React.Component<
 
   render() {
     return (
-      <div>
+      <div className="article-page">
+        <div className="banner">
+          <div className="container">
+            <h2>Your Post</h2>
+          </div>
+        </div>
         <div className="container page">
-          <div className="">
-            <div>
-              <h3>post me pleassssse</h3>
-              <Button
-                id="togglebutton"
-                onClick={() => {
-                  this.setState({
-                    createPostModal: !this.state.createPostModal,
-                  });
-                }}
-              >
-                New Post
-              </Button>
+          <Button
+            color="info"
+            id="togglebutton"
+            onClick={() => {
+              this.setState({
+                createPostModal: !this.state.createPostModal,
+              });
+            }}
+          >
+            New Post
+          </Button>
+          <br></br>
+
+          {this.state.createPostModal === true ? (
+            <PostCreate
+              fetchUser={() => this.props.fetchUser()}
+              sessionToken={this.props.sessionToken}
+            />
+          ) : null}
+
+          <Row>
+            <Col>
+              <Card>
+                <CardImg
+                  top
+                  width="286"
+                  height="180"
+                  src={StockPostImg}
+                  alt="Your Post Needs An Image"
+                />
+                <CardBody>
+                  <CardTitle>{this.props.user.posts[0].titleOfPost}</CardTitle>
+                  <CardSubtitle>{this.props.user.posts[0].url}</CardSubtitle>
+                  <CardText>
+                    {this.props.user.posts[0].descriptionOfPost}
+                  </CardText>
+                  <Button
+                    color="warning"
+                    id="togglebutton"
+                    onClick={() => {
+                      this.setState({
+                        editModalOpen: !this.state.editModalOpen,
+                      });
+                    }}
+                  >
+                    Edit Post
+                  </Button>
+                  <Button
+                    className=" pull-xs-right"
+                    color="danger"
+                    id="togglebutton"
+                    onClick={() => {
+                      this.setState({
+                        deletePostOpen: !this.state.deletePostOpen,
+                      });
+                    }}
+                  >
+                    Delete Post
+                  </Button>
+                </CardBody>
+              </Card>
               <Row>
-                {this.state.createPostModal === true ? (
-                  <PostCreate
+                {this.state.editModalOpen === true ? (
+                  <PostUpdate
                     fetchUser={() => this.props.fetchUser()}
                     sessionToken={this.props.sessionToken}
                   />
                 ) : null}
               </Row>
               <Row>
-                <Col>
-                  <Card>
-                    <CardImg
-                      top
-                      width="286"
-                      height="180"
-                      src={StockPostImg}
-                      alt="Your Post Needs An Image"
-                    />
-                    <CardBody>
-                      <CardTitle>
-                        {this.props.user.posts[0].titleOfPost}
-                      </CardTitle>
-                      <CardSubtitle>
-                        {this.props.user.posts[0].url}
-                      </CardSubtitle>
-                      <CardText>
-                        {this.props.user.posts[0].descriptionOfPost}
-                      </CardText>
-                      <Button
-                        id="togglebutton"
-                        onClick={() => {
-                          this.setState({
-                            editModalOpen: !this.state.editModalOpen,
-                          });
-                        }}
-                      >
-                        Edit Post
-                      </Button>
-                      <Button
-                        id="togglebutton"
-                        onClick={() => {
-                          this.setState({
-                            deletePostOpen: !this.state.deletePostOpen,
-                          });
-                        }}
-                      >
-                        Delete Post
-                      </Button>
-                    </CardBody>
-                  </Card>
-                  <Row>
-                    {this.state.editModalOpen === true ? (
-                      <PostUpdate
-                        fetchUser={() => this.props.fetchUser()}
-                        sessionToken={this.props.sessionToken}
-                      />
-                    ) : null}
-                  </Row>
-                  <Row>
-                    {this.state.deletePostOpen === true ? (
-                      <PostDelete
-                        fetchUser={() => this.props.fetchUser()}
-                        sessionToken={this.props.sessionToken}
-                      />
-                    ) : null}
-                  </Row>
-                </Col>
+                {this.state.deletePostOpen === true ? (
+                  <PostDelete
+                    fetchUser={() => this.props.fetchUser()}
+                    sessionToken={this.props.sessionToken}
+                  />
+                ) : null}
               </Row>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </div>
       </div>
     );

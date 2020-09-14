@@ -50,62 +50,53 @@ export default class UpdateCollection extends React.Component<
   render() {
     return (
       <div className="auth-page">
-        <div className="container page">
-          <div className="row">
-            <div className="col-md-6 offset-md-3 col-sm-4">
-              <form
-                onSubmit={(e) => {
-                  this.handleSubmit(e);
+        <form
+          onSubmit={(e) => {
+            this.handleSubmit(e);
+          }}
+        >
+          <fieldset>
+            <fieldset>
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                placeholder="Collection ID To Edit"
+                onChange={(e) => {
+                  this.setState({ id: e.target.value });
                 }}
-              >
-                <fieldset className="form-group">
-                  <fieldset>
-                    <input
-                      type="number"
-                      className="form-control form-control-lg"
-                      placeholder="Collection ID To Edit"
-                      onChange={(e) => {
-                        this.setState({ id: e.target.value });
-                      }}
-                    />
-                  </fieldset>
-                </fieldset>
-                <fieldset>
-                  <fieldset className="form-group">
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      placeholder="Collection Name"
-                      value={this.state.nameOfCollection}
-                      onChange={(e) => {
-                        this.setState({ nameOfCollection: e.target.value });
-                      }}
-                    />
-                  </fieldset>
-                  <fieldset className="form-group">
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      placeholder="Collection Description"
-                      value={this.state.descriptionOfCollection}
-                      onChange={(e) => {
-                        this.setState({
-                          descriptionOfCollection: e.target.value,
-                        });
-                      }}
-                    />
-                  </fieldset>
-                  <button
-                    className="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                  >
-                    Update Collection
-                  </button>
-                </fieldset>
-              </form>
-            </div>
-          </div>
-        </div>
+              />
+            </fieldset>
+          </fieldset>
+          <fieldset>
+            <fieldset className="form-group">
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Collection Name"
+                value={this.state.nameOfCollection}
+                onChange={(e) => {
+                  this.setState({ nameOfCollection: e.target.value });
+                }}
+              />
+            </fieldset>
+            <fieldset className="form-group">
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Collection Description"
+                value={this.state.descriptionOfCollection}
+                onChange={(e) => {
+                  this.setState({
+                    descriptionOfCollection: e.target.value,
+                  });
+                }}
+              />
+            </fieldset>
+            <button color="warning" className=" pull-xs-right" type="submit">
+              Update Collection
+            </button>
+          </fieldset>
+        </form>
       </div>
     );
   }

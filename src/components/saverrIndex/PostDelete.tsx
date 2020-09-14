@@ -43,36 +43,30 @@ export default class PostDelete extends React.Component<
   render() {
     return (
       <div className="auth-page">
-        <div className="container page">
-          <div className="row">
-            <div className="col-md-6 offset-md-3 col-sm-4">
-              <form
-                onSubmit={(e) => {
-                  this.handleSubmit(e);
+        <form
+          onSubmit={(e) => {
+            this.handleSubmit(e);
+          }}
+        >
+          <fieldset>
+            <fieldset>
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Post ID To Delete"
+                onChange={(e) => {
+                  this.setState({ id: e.target.value });
                 }}
-              >
-                <fieldset className="form-group">
-                  <fieldset>
-                    <input
-                      type="text"
-                      className="form-control form-control-lg"
-                      placeholder="Post ID To Edit"
-                      onChange={(e) => {
-                        this.setState({ id: e.target.value });
-                      }}
-                    />
-                  </fieldset>
-                  <button
-                    className="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                  >
-                    Delete Post
-                  </button>
-                </fieldset>
-              </form>
-            </div>
-          </div>
-        </div>
+              />
+            </fieldset>
+            <button
+              className="btn btn-lg btn-primary pull-xs-right"
+              type="submit"
+            >
+              Delete Post
+            </button>
+          </fieldset>
+        </form>
       </div>
     );
   }

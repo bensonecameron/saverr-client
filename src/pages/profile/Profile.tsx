@@ -73,25 +73,36 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
 
   render() {
     return (
-      <div className="container page">
-        <div className="">
-          <h2>{this.state.user.userName}</h2>
-          <BrowserRouter>
-            <Switch>
-              <Container>
-                <Row>
-                  <Col m={3}>
-                    <Button
-                      id="togglebutton"
-                      onClick={() => {
-                        this.setState({
-                          showCollections: !this.state.showCollections,
-                        });
-                      }}
-                    >
-                      Toggle Post / Colelction
-                    </Button>
-                    <Row>
+      <div className="profile-page">
+        <div className="user-info">
+          <div className="container">
+            <div className="row">
+              <div className="col-xs-12 col-md-10 offset-md-1">
+                <h2>{this.state.user.userName}, here's your Saverrs'</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-xs-12 col-md-10 offset-md-1">
+              <div className="articles-toggle">
+                <BrowserRouter>
+                  <Switch>
+                    <Container>
+                      <Button
+                        outline
+                        color="primary"
+                        id="togglebutton"
+                        onClick={() => {
+                          this.setState({
+                            showCollections: !this.state.showCollections,
+                          });
+                        }}
+                      >
+                        Toggle Post / Colelction
+                      </Button>
+
                       {this.state.showCollections === false ? (
                         <PostIndex
                           user={this.state.user}
@@ -107,20 +118,12 @@ export default class Home extends React.Component<AcceptedProps, ProfileState> {
                           collections={this.state.user.collections || []}
                         />
                       )}
-                    </Row>
-                  </Col>
-                </Row>
-              </Container>
-              {/* <Route exact path="/myposts">
-                <PostIndex
-                  user={this.state.user}
-                  fetchUser={() => this.fetchUser()}
-                  sessionToken={this.props.sessionToken}
-                  collections={this.state.user.collections || []}
-                />
-              </Route> */}
-            </Switch>
-          </BrowserRouter>
+                    </Container>
+                  </Switch>
+                </BrowserRouter>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
