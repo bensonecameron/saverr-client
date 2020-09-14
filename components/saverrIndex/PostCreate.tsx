@@ -11,25 +11,29 @@ type AcceptedProps = {
 };
 
 type NewCollectionInfo = {
-  nameOfCollection: string;
-  descriptionOfCollection: string;
+  titleOfPost: string;
+  descriptionOfPost: string;
+  url?: string;
+  imgOfPost: string;
 };
 
-export default class CollectionCreate extends React.Component<
+export default class PostCreate extends React.Component<
   AcceptedProps,
   NewCollectionInfo
 > {
   constructor(props: AcceptedProps) {
     super(props);
     this.state = {
-      nameOfCollection: "",
-      descriptionOfCollection: "",
+      titleOfPost: "",
+      descriptionOfPost: "",
+      url: "",
+      imgOfPost: "",
     };
   }
 
   handleSubmit(e: FormEvent) {
     e.preventDefault();
-    fetch("http://localhost:3001/collection/new", {
+    fetch("http://localhost:3001/post/new", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -37,8 +41,10 @@ export default class CollectionCreate extends React.Component<
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjAwMDg2NDgyLCJleHAiOjE2MDAxNzI4ODJ9.CSXjRYS4Bz4Zo-Fdlags5h-Lf8Nxp7Kp9LNtxklalUE",
       },
       body: JSON.stringify({
-        nameOfCollection: this.state.nameOfCollection,
-        descriptionOfCollection: this.state.descriptionOfCollection,
+        titleOfPost: this.state.titleOfPost,
+        descriptionOfPost: this.state.descriptionOfPost,
+        url: this.state.url,
+        imgOfPost: this.state.imgOfPost,
       }),
     }).then((res) => res.json());
   }
@@ -56,10 +62,10 @@ export default class CollectionCreate extends React.Component<
               <input
                 type="text"
                 className="form-control form-control-lg"
-                placeholder="Title Of Collection"
-                value={this.state.nameOfCollection}
+                placeholder="Title Of Post"
+                value={this.state.titleOfPost}
                 onChange={(e) => {
-                  this.setState({ nameOfCollection: e.target.value });
+                  this.setState({ titleOfPost: e.target.value });
                 }}
               />
             </fieldset>
@@ -67,11 +73,37 @@ export default class CollectionCreate extends React.Component<
               <input
                 type="text"
                 className="form-control form-control-lg"
-                placeholder="Collection Description"
-                value={this.state.descriptionOfCollection}
+                placeholder="Post Description"
+                value={this.state.descriptionOfPost}
                 onChange={(e) => {
                   this.setState({
-                    descriptionOfCollection: e.target.value,
+                    descriptionOfPost: e.target.value,
+                  });
+                }}
+              />
+            </fieldset>
+            <fieldset className="form-group">
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Post URL"
+                value={this.state.url}
+                onChange={(e) => {
+                  this.setState({
+                    url: e.target.value,
+                  });
+                }}
+              />
+            </fieldset>
+            <fieldset className="form-group">
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                placeholder="Post Image"
+                value={this.state.imgOfPost}
+                onChange={(e) => {
+                  this.setState({
+                    imgOfPost: e.target.value,
                   });
                 }}
               />
@@ -80,7 +112,7 @@ export default class CollectionCreate extends React.Component<
               className="btn btn-lg btn-primary pull-xs-right"
               type="submit"
             >
-              Create Collection
+              Create Post
             </button>
           </fieldset>
         </form>

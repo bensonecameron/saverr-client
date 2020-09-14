@@ -1,92 +1,94 @@
-import React from "react";
-import { PostType, UserType, CollectionType } from "../types/Types";
-import Collection from "../../pages/collections/Collections";
-import {
-  Card,
-  CardImg,
-  CardTitle,
-  CardBody,
-  Button,
-  Modal,
-  Row,
-  Col,
-  CardSubtitle,
-  CardText,
-} from "reactstrap";
-import APIURL from "../../helpers/environment";
+export {};
 
-type AcceptedProps = {
-  sessionToken: string;
-  collection: CollectionType[];
-  user: UserType;
+// import React from "react";
+// import { PostType, UserType, CollectionType } from "../types/Types";
+// import Collection from "../../pages/collections/Collections";
+// import {
+//   Card,
+//   CardImg,
+//   CardTitle,
+//   CardBody,
+//   Button,
+//   Modal,
+//   Row,
+//   Col,
+//   CardSubtitle,
+//   CardText,
+// } from "reactstrap";
+// import APIURL from "../../helpers/environment";
 
-  fetchUser: () => void;
-};
+// type AcceptedProps = {
+//   sessionToken: string;
+//   collection: CollectionType[];
+//   user: UserType;
 
-type CollectionCardState = {
-  collectionToEdit: CollectionType;
-};
+//   fetchUser: () => void;
+// };
 
-export default class CollectionCard extends React.Component<
-  AcceptedProps,
-  CollectionCardState
-> {
-  constructor(props: AcceptedProps) {
-    super(props);
-    this.state = {
-      collectionToEdit: {
-        nameOfCollection: "",
-        decriptionOfCollection: "",
-        impCollection: false,
-      },
-    };
-  }
+// type CollectionCardState = {
+//   collectionToEdit: CollectionType;
+// };
 
-  deleteCollection(collection: CollectionType) {
-    fetch(`${APIURL}/collection/${collection.id}`, {
-      method: "delete",
-      headers: {
-        "content-type": "application/json",
-        authorization: this.props.sessionToken,
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        this.props.fetchUser();
-      });
-  }
+// export default class CollectionCard extends React.Component<
+//   AcceptedProps,
+//   CollectionCardState
+// > {
+//   constructor(props: AcceptedProps) {
+//     super(props);
+//     this.state = {
+//       collectionToEdit: {
+//         nameOfCollection: "",
+//         decriptionOfCollection: "",
+//         impCollection: false,
+//       },
+//     };
+//   }
 
-  updateCollection(collection: CollectionType) {
-    fetch(`${APIURL}/collection/${collection.id}`, {
-      method: "put",
-      headers: {
-        "content-type": "application/json",
-        authorization: this.props.sessionToken,
-      },
-      body: JSON.stringify({
-        collection: this.state.collectionToEdit,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          collectionToEdit: {
-            nameOfCollection: "",
-            decriptionOfCollection: "",
-            impCollection: false,
-          },
-        });
-        this.props.fetchUser();
-      });
-  }
+//   deleteCollection(collection: CollectionType) {
+//     fetch(`${APIURL}/collection/${collection.id}`, {
+//       method: "delete",
+//       headers: {
+//         "content-type": "application/json",
+//         authorization: this.props.sessionToken,
+//       },
+//     })
+//       .then((res) => res.json())
+//       .then((res) => {
+//         console.log(res);
+//         this.props.fetchUser();
+//       });
+//   }
 
-  setCollectionToEdit(collection: CollectionType) {
-    this.setState({ collectionToEdit: collection });
-  }
+//   updateCollection(collection: CollectionType) {
+//     fetch(`${APIURL}/collection/${collection.id}`, {
+//       method: "put",
+//       headers: {
+//         "content-type": "application/json",
+//         authorization: this.props.sessionToken,
+//       },
+//       body: JSON.stringify({
+//         collection: this.state.collectionToEdit,
+//       }),
+//     })
+//       .then((res) => res.json())
+//       .then((res) => {
+//         console.log(res);
+//         this.setState({
+//           collectionToEdit: {
+//             nameOfCollection: "",
+//             decriptionOfCollection: "",
+//             impCollection: false,
+//           },
+//         });
+//         this.props.fetchUser();
+//       });
+//   }
 
-  render() {
-    return <div id="CollectionDiv"></div>;
-  }
-}
+//   setCollectionToEdit(collection: CollectionType) {
+//     this.setState({ collectionToEdit: collection });
+//   }
+
+//   render() {
+//     return <div id="CollectionDiv"></div>;
+//   }
+// }
